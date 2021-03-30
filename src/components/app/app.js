@@ -8,15 +8,19 @@ import './app.css'
 
 export default class App extends Component {
     constructor(props) {
+
         super(props);
         this.state = {
             data: [
-                {label: 'Going to learn React', important: true, id: 1},
-                {label: 'That is so good', important: false, id: 2},
-                {label: 'I need a break...', important: false, id: 3}
-            ]
+                {label: 'the first post', important: true, id: 1},
+                {label: 'sample text 2', important: false, id: 2},
+                {label: 'rtdfyguhjiokl', important: false, id: 3}
+            ],
+
         };
-        this.deleteItem = this.deleteItem.bind(this)
+        this.deleteItem = this.deleteItem.bind(this);
+        this.addItem = this.addItem.bind(this)
+        this.maxId = 4;
     }
 
     deleteItem(id) {
@@ -30,6 +34,21 @@ export default class App extends Component {
         });
     }
 
+    addItem(text) {
+        const newPost = {
+            label: text,
+            important: false,
+            id: this.maxId
+        }
+        this.setState(({data}) => {
+            const newPostsArr = [...data, newPost];
+            return {
+                data: newPostsArr
+            }
+        })
+    }
+
+
     render() {
         return (
             <div className="app">
@@ -41,9 +60,13 @@ export default class App extends Component {
                 <PostList
                     posts={this.state.data}
                     onDelete={this.deleteItem}/>
-                <PostAddForm/>
+                <PostAddForm
+                    onAdd={this.addItem}
+                />
             </div>
         )
     }
 }
+
+
 
